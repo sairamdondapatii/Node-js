@@ -1,0 +1,23 @@
+{
+    "students": [
+        {
+            "id": 1,
+            "city": "Machilipatnam"
+        },
+        {
+            "id": 2,
+            "city": "vijayawada"
+        },
+        {
+            "id": 3,
+            "city": "Guduru"
+        },
+        {
+            "id": 4,
+            "city": "Tarakaturu Palem"
+        }
+    ],
+    "teachers": [
+        {}
+    ]
+}
