@@ -1,6 +1,6 @@
 const express = require('express');
 const {connection} = require('./database.js')
-const {userModel,addressModel} = require('./userSchema.js')
+const {customerModel,productModel} = require('./customerProductsSchema.js')
 
 
 
@@ -10,37 +10,29 @@ app.use(express.json());
 
 
 app.get('/',(req,res)=>{
-    res.send('welcome')
+    res.send('welcome');
+});
+
+
+app.post('/customer', async (req,res)=>{
+    const products = await productModel.insertMany(req.body.products);
+    const productIds = products.map((product)=>product._id);
+    const customer = await customerModel.create({...req.body.customer,purchaseByProducts:productIds});
+
+    await productModel.updateMany({_id:{$in:productIds}},{$push:{purchaseByCustomers:customer._id}})
+    res.json(customer)
+});
+
+app.get('/customer/:id', async (req,res)=>{
+    const customer = await customerModel.findById(req.params.id).populate('purchaseByProducts')
+    res.json(customer)
 })
 
 
-app.post('/user',async (req,res)=>{
-    try {
-        const address =await  addressModel.create(req.body.address);
-        const user = await userModel.create({...req.body.user,address:address._id})
-        res.json(user)
-    } catch (error) {
-        console.log(error)
-    }
+app.get('/product/:id', async (req,res)=>{
+    const products = await productModel.findById(req.params.id).populate('purchaseByCustomers')
+    res.json(products)
 })
-
-app.get('/user/:id',async (req,res)=>{
-    try {
-        const user = await userModel.findById(req.params.id).populate('address')
-        res.json(user)
-    } catch (error) {
-        console.log(error)
-    }
-})
-app.get('/users',async (req,res)=>{
-    try {
-        const user = await userModel.find().populate('address')
-        res.json(user)
-    } catch (error) {
-        console.log(error)
-    }
-})
-
 
 
 
