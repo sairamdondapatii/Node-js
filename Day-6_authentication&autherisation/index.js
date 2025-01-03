@@ -11,7 +11,7 @@ app.use(express.json());
 app.use('/',userRouter);
 
 app.get('/movies',(req,res)=>{
-    console.log(req.query)
+    // console.log(req.query)
     const {token} = req.query
     jwt.verify(token, 'shhhhh', (error,decoded)=>{
         // console.log(decoded.name)
