@@ -29,10 +29,9 @@ userRouter.post('/login', async(req,res)=>{
         const user = await UserModel.findOne({email:email});
         if(user){
             bcrypt.compare(password, user.password, function(err, result) {
-                // result == true
                 if(result){
-                    const token = jwt.sign({ name: 'ram' }, 'shhhhh');
-                    res.status(200).json({'message':'Login Successfully','token':token})
+                    const token = jwt.sign({ authourID:user._id , authour:user.name }, 'shhhhh');
+                    res.status(200).json({'message':`Login Successfully ${user.name}`,'token':token})
                 }else{
                     res.status(400).json({'message':'invalid password or email'})
                 }
