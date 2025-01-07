@@ -3,10 +3,10 @@ const {connection} = require('./database.js');
 const { userRouter } = require('./routes/UserRouter.js');
 const { auth } = require('./middleware/auth.middleware.js');
 const { NotesRouter } = require('./routes/Notes.router.js');
-
+const cors = require('cors')
 
 const app = express();
-
+app.use(cors())
 app.use(express.json());
 
 app.use('/users',userRouter);
