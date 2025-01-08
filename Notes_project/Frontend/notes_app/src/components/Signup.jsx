@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import './Signup.css'
 
 const Signup = () => {
     const [name,setName] = useState('');
@@ -37,14 +38,16 @@ const Signup = () => {
 
 
   return (
-    <form onSubmit={handleSubmit} method='post'>
-        <h1>Signup</h1>
-        <input type='text' placeholder='Enter your name' required value={name} onChange={(e)=>setName(e.target.value)}/>
-        <input type='email' placeholder='Enter your Email' required value={email} onChange={(e)=>setEmail(e.target.value)} />
-        <input type='text' placeholder='Enter your age' required  value={age} onChange={(e)=>setAge(e.target.value)}/>
-        <input type='password' placeholder='Enter your password' required value={password} onChange={(e)=>setPassword(e.target.value)} />
-        <button type='submit'>Signup</button>
-    </form>
+    <div className='signup-container'>
+        <form onSubmit={handleSubmit} method='post' className='signup-form'>
+            <h1>Signup</h1>
+            <input type='text' placeholder='Enter your name' required value={name} onChange={(e)=>setName(e.target.value)}/>
+            <input type='email' placeholder='Enter your Email' required value={email} onChange={(e)=>setEmail(e.target.value)} />
+            <input type='text' placeholder='Enter your age' required  value={age} onChange={(e)=>setAge(e.target.value)}/>
+            <input type='password' placeholder='Enter your password' required value={password} onChange={(e)=>setPassword(e.target.value)} />
+            <button type='submit'>Signup</button>
+        </form>
+    </div>
   )
 }
 export default Signup

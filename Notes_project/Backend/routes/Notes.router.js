@@ -14,6 +14,16 @@ NotesRouter.get('/',async (req,res)=>{
     }
 
 })
+NotesRouter.get('/:id',async (req,res)=>{
+    const id = req.params.id;
+    try {
+        const userNotes = await NotesModel.find({authourID:req.body.authourID,_id:id})
+        res.status(200).send(userNotes)
+    } catch (error) {
+        res.status(400).json({'error':error.message})
+    }
+
+})
 
 //To create Notes
 

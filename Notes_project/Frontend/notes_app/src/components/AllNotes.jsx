@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import styles from './AllNotes.module.css'
 
 const AllNotes = () => {
     const [notes,setNotes] = useState([])
@@ -11,7 +13,6 @@ const AllNotes = () => {
             })
             const notesdata = await response.json()
             setNotes(notesdata)
-            console.log(notesdata)
         } catch (error) {
             console.log(error)
         }
@@ -21,17 +22,27 @@ const AllNotes = () => {
         fetchData()
     },[])
   return (
-    <div>
+    <>
+        <div className={styles.container}>
+        <h1>Your Notes</h1>
+        <div className={styles.create}>
+         <Link to='/createnote' className={styles.link} >+ New note</Link>
+        </div>
+        {notes.length === 0 && <div>
+            <h3>No Notes found</h3>
+            </div>}
         {notes.map((note)=>{
-            const {title,body,category,authour,_id:id} = note;
-            return <div key={id}>
-                <p>{title}</p>
-                <p>{body}</p>
-                <p>{category}</p>
-                <p>{authour}</p>
-            </div>
+            const {title,_id:id} = note;
+            return (
+                <div className={styles.note}  key={id}>
+                    <Link to={`${id}`}  className={styles.notes}>
+                        <p className={styles.p}>{title}</p>
+                    </Link>
+                </div>
+            )
         })}
     </div>
+    </>
   )
 }
 

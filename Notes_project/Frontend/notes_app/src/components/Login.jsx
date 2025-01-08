@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-
+import './Login.css'
 const Login = () => {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
@@ -20,7 +20,6 @@ const Login = () => {
         }).then(response => {
             return response.json()
         }).then(data =>{
-            console.log(data)
             localStorage.setItem('token',data.token)
             setEmail('')
             setPassword('')
@@ -32,12 +31,14 @@ const Login = () => {
 
 
   return (
-    <form onSubmit={handleSubmit} method='post'>
-        <h1>Login</h1>
-        <input type='email' placeholder='Enter your Email' required value={email} onChange={(e)=>setEmail(e.target.value)} />
-        <input type='password' placeholder='Enter your password' required value={password} onChange={(e)=>setPassword(e.target.value)} />
-        <button type='submit'>Login</button>
-    </form>
+    <div className="login-container"> 
+        <form onSubmit={handleSubmit} className="login-form" method='post'>
+            <h1>Login</h1>
+            <input type='email' placeholder='Enter your Email' required value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type='password' placeholder='Enter your password' required value={password} onChange={(e) => setPassword(e.target.value)} />
+            <button type='submit'>Login</button> 
+        </form> 
+    </div>
   )
 }
 

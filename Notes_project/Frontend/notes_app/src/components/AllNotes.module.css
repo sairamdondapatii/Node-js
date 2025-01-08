@@ -1,0 +1,53 @@
+/* AllNotes.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin: 10px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.note {
+    max-width: 1024px;
+    width: 100%;
+    margin: 15px auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    
+}
+
+.notes{
+    text-decoration: none;
+    color: black;
+    
+}
+.p{
+    margin: 0;
+    padding: 10px;
+    font-size: 18px;
+}
+.create{
+    max-width: 1024px;
+    width: 100%;
+    margin: auto;
+    text-align: end;
+}
+.link{
+    color: #333 ;
+    font-weight: bold;
+    text-decoration: none;
+
+}
+.link:hover{
+    text-decoration: underline;
+}
+
+
