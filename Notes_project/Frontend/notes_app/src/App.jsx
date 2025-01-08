@@ -1,12 +1,12 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Signup from './components/Signup';
-import Login from './components/Login';
-import AllNotes from './components/AllNotes';
-import CreateNotes from './components/CreateNotes';
-import Note from './components/Note';
-import Homelayout from './components/Homelayout';
-import Home from './components/Home';
+import Signup from './Pages/Signup';
+import Login from './Pages/Login';
+import AllNotes from './Pages/AllNotes';
+import CreateNotes from './Pages/CreateNotes';
+import Note from './Pages/Note';
+import Homelayout from './Pages/Homelayout';
+import Home from './Pages/Home';
 
 const router = createBrowserRouter([
   {
