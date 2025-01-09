@@ -7,6 +7,7 @@ import CreateNotes from './Pages/CreateNotes';
 import Note from './Pages/Note';
 import Homelayout from './Pages/Homelayout';
 import Home from './Pages/Home';
+import Privateroute from './components/Privateroute';
 
 const router = createBrowserRouter([
   {
@@ -19,15 +20,15 @@ const router = createBrowserRouter([
       },
       {
         path: '/notes',
-        element: <AllNotes />,
+        element: <Privateroute><AllNotes /></Privateroute> ,
       },
       {
         path: '/createnote',
-        element: <CreateNotes />,
+        element: <Privateroute><CreateNotes /></Privateroute>,
       },
       {
         path: '/notes/:id',
-        element: <Note />,
+        element: <Privateroute><Note /></Privateroute>,
       },
     ],
   },

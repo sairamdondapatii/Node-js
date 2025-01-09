@@ -20,7 +20,7 @@ body{
     font-size: 28px;
     z-index: 2;
 }
-.lgA{
+.navlinksLg a{
     padding: 0px 16px;
     color: #333;
     font-size: 20px;
@@ -38,7 +38,7 @@ body{
     z-index: 2;
 }
 
-.smA{
+.navlinksSm a{
     padding: 16px 16px;
     color: #333;
     font-size: 20px;
@@ -82,7 +82,7 @@ body{
     .navlinksLg{
         display: none;
     }
-    .open{
+    .navlinksSm.open{
         left: 0;
         display: flex;
     }

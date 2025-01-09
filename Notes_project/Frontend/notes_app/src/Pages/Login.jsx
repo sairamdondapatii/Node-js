@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { redirect, useNavigate } from 'react-router-dom';
 import './Login.css'
+import { useGlobalContext } from '../context/AuthcontextProvider';
 const Login = () => {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
@@ -9,6 +10,7 @@ const Login = () => {
         password
     }
     const navigate = useNavigate()
+    const {setAuth} = useGlobalContext()
     const handleSubmit = (e)=>{
         e.preventDefault()
         fetch('http://localhost:8090/users/login',{
@@ -20,10 +22,11 @@ const Login = () => {
         }).then(response => {
             return response.json()
         }).then(data =>{
-            localStorage.setItem('token',data.token)
+            data.token && localStorage.setItem('token',data.token)
+            setAuth(data.token)
             setEmail('')
             setPassword('')
-            data && navigate('/notes')
+            data.token && navigate('/notes')
         }).catch(error =>{
             console.log(error)
         })

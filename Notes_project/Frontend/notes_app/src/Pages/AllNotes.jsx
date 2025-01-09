@@ -21,6 +21,8 @@ const AllNotes = () => {
     useEffect(()=>{
         fetchData()
     },[])
+
+
   return (
     <>
         <div className={styles.container}>
@@ -29,7 +31,7 @@ const AllNotes = () => {
          <Link to='/createnote' className={styles.link} >+ New note</Link>
         </div>
         {notes.length === 0 && <div>
-            <h3>No Notes found</h3>
+            <h3 style={{textAlign:'center'}}>No Notes found</h3>
             </div>}
         {notes.map((note)=>{
             const {title,_id:id} = note;
