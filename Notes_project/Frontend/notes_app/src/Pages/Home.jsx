@@ -7,13 +7,42 @@ const Home = () => {
 
   return (
     <div className={styles.container}>
-      <div>
         <div className={styles.main_content}>
           <h1>The simplest way to keep notes</h1>
-          <p>All your notes, synced on all your devices. Get Simplenote now for iOS, Android, Mac, Windows, Linux, or in your browser.</p>
+          <p>All your notes, synced on all your devices. Get Quicknote now for iOS, Android, Mac, Windows, Linux, or in your browser.</p>
           {auth ? <Link to='/notes'>Your Notes</Link> : <Link to='/login'>Login</Link> }
         </div>
-      </div>
+        <div className={styles.subcontent}>
+          <h2>
+          Comprehensive underneath, simple on the surface
+          </h2>
+          <div className={styles.features}>
+            <div className={styles.feature}>
+              <h5>Use it everywhere</h5>
+              <p>Notes stay updated across all your devices, automatically and in real time. There’s no “sync” button: It just works.</p>
+            </div>
+            <div className={styles.feature}>
+              <h5>Stay organized</h5>
+              <p>Add tags to find notes quickly with instant searching.</p>
+            </div>
+            <div className={styles.feature}>
+              <h5>Work together</h5>
+              <p>Share a to-do list, post some instructions, or publish your notes online.</p>
+            </div>
+            <div className={styles.feature}>
+              <h5>Go back in time</h5>
+              <p>Notes are backed up with every change, so you can see what you noted last week or last month.</p>
+            </div>
+            <div className={styles.feature}>
+              <h5>Markdown support</h5>
+              <p>Write, preview, and publish your notes in Markdown format.</p>
+            </div>
+            <div className={styles.feature}>
+              <h5>Use it everywhere</h5>
+              <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni distinctio libero voluptate consectetur reprehenderit deleniti.</p>
+            </div>
+          </div>
+        </div>
     </div>
   )
 }
