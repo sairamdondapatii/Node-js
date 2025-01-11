@@ -14,9 +14,12 @@ const Signup = () => {
         password
     }
     const navigate = useNavigate()
+    const [isloading,setisloading] = useState(false)
+
     const handleSubmit = (e)=>{
+        setisloading(true)
         e.preventDefault()
-        fetch('http://localhost:8090/users/register',{
+        fetch('https://notes-backend-o9fm.onrender.com/users/register',{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -31,7 +34,9 @@ const Signup = () => {
             setAge('')
             setPassword('')
             data && navigate('/login')
+            setisloading(false)
         }).catch(error =>{
+            setisloading(false)
             console.log(error)
         })
     }
@@ -45,7 +50,7 @@ const Signup = () => {
             <input type='email' placeholder='Enter your Email' required value={email} onChange={(e)=>setEmail(e.target.value)} />
             <input type='text' placeholder='Enter your age' required  value={age} onChange={(e)=>setAge(e.target.value)}/>
             <input type='password' placeholder='Enter your password' required value={password} onChange={(e)=>setPassword(e.target.value)} />
-            <button type='submit'>Signup</button>
+            <button type='submit'>{isloading ? 'Loading...' : 'Signup'}</button>
         </form>
     </div>
   )

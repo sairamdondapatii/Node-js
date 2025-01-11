@@ -24,7 +24,7 @@
 
 .main_content>a{
     max-width: 500px;
-    font-size: 18px;
+    font-size: 14px;
     display: inline-block;
     background-color: #3361cc;
     text-decoration: none;
@@ -59,7 +59,30 @@
     margin:0px;
     color: #8c8f94;
 }
+.footer{
+    max-width: 1024px;
+    width: 100%;
+    margin:50px auto;
 
+    text-align: center;
+}
+.footer_menu{
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 20px;
+    padding: 0px;
+}
+.footer_links{
+    font-size: small;
+}
+.footer_links>a{
+    padding: 0px 10px;
+    text-decoration: none;
+    color: #333;
+    
+}
 
 
 @media screen and (max-width:768px) {

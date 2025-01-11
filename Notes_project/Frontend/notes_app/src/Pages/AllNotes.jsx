@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigation } from 'react-router-dom'
 import styles from './AllNotes.module.css'
+import Loading from '../components/Loading'
 
 const AllNotes = () => {
     const [notes,setNotes] = useState([])
+    const [isLoading,setIsLoading] = useState(false)
     const fetchData = async ()=>{
         try {
-            const response = await fetch('http://localhost:8090/notes/',{
+            setIsLoading(true)
+            const response = await fetch('https://notes-backend-o9fm.onrender.com/notes/',{
                 headers:{
                     'Authorization':`Bearer ${localStorage.getItem('token')}`
                 }
             })
             const notesdata = await response.json()
             setNotes(notesdata)
+            setIsLoading(false)
         } catch (error) {
+            setIsLoading(false)
             console.log(error)
         }
     }
@@ -22,7 +27,6 @@ const AllNotes = () => {
         fetchData()
     },[])
 
-
   return (
     <>
         <div className={styles.container}>
@@ -30,10 +34,10 @@ const AllNotes = () => {
         <div className={styles.create}>
          <Link to='/createnote' className={styles.link} >+ New note</Link>
         </div>
-        {notes.length === 0 && <div>
+        {isLoading ? <Loading/> : notes.length === 0 ? <div>
             <h3 style={{textAlign:'center'}}>No Notes found</h3>
-            </div>}
-        {notes.map((note)=>{
+            </div> :
+         notes.map((note)=>{
             const {title,_id:id} = note;
             return (
                 <div className={styles.note}  key={id}>

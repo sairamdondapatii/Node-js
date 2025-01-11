@@ -8,11 +8,13 @@ const CreateNotes = () => {
     const [category,setCategory] = useState('')
     const payload = {title,body,category}
     const navigate = useNavigate()
+    const [isloading,setIsloading] = useState(false)
     const handleSubmit = async (e)=>{
         e.preventDefault();
         console.log(payload)
         try {
-            const response = await fetch('http://localhost:8090/notes/create',{
+            setIsloading(true)
+            const response = await fetch('https://notes-backend-o9fm.onrender.com/notes/create',{
                 method:"POST",
                 headers:{
                     'Content-type':'application/json',
@@ -20,9 +22,12 @@ const CreateNotes = () => {
                 },
                 body:JSON.stringify(payload)
             })
-            const notesdata = await response.json()
-            notesdata && navigate('/notes'); 
+            const data = await response.json()
+            setIsloading(false)
+            console.log(data)
+            data && navigate('/notes'); 
         } catch (error) {
+            setIsloading(false)
             console.log(error)
         }
     }
@@ -33,7 +38,7 @@ const CreateNotes = () => {
             <input type='text' className={styles.input} placeholder='Title of the note' required value={title} onChange={(e)=>setTitle(e.target.value)}/>
             <textarea placeholder='Body' className={styles.textarea} required value={body} onChange={(e)=>setBody(e.target.value)}></textarea>
             <input type='category' className={styles.input} placeholder='category' required  value={category} onChange={(e)=>setCategory(e.target.value)}/>
-            <button type='submit' className={styles.btn}>Create Note</button>
+            <button type='submit' className={styles.btn}>{isloading ? 'Creating...' : 'Create Note'}</button>
         </form>
     </div>
   )

@@ -2,23 +2,32 @@
 import React, { useEffect, useState } from 'react'
 import {useNavigate, useParams } from 'react-router-dom'
 import styles from './Note.module.css'
+import Loading from '../components/Loading'
 
 const Note = () => {
     const {id} = useParams()
     const [notes,setNotes] = useState([])
     const [notebody,setNoteBody] = useState('')
     const navigate = useNavigate()
+    const [isloading , setIsloading] = useState(true)
+
+    const payload = notebody === '' ? notes.body : notebody;
+
     const fetchData = async ()=>{
         try {
-            const response = await fetch(`http://localhost:8090/notes/${id}`,{
+            setIsloading(true)
+            const response = await fetch(`https://notes-backend-o9fm.onrender.com/notes/${id}`,{
                 headers:{
                     'Authorization':`Bearer ${localStorage.getItem('token')}`
                 }
             })
             const notesdata = await response.json()
             setNotes(notesdata)
+            setIsloading(false)
         } catch (error) {
+            setIsloading(false)
             console.log(error)
+
         }
     }
 
@@ -28,37 +37,46 @@ const Note = () => {
 
     const handleDelete = async(id)=>{
         try {
-            const response = await fetch(`http://localhost:8090/notes/delete/${id}`,{
+            setIsloading(true)
+            const response = await fetch(`https://notes-backend-o9fm.onrender.com/notes/delete/${id}`,{
                 method:"DELETE",
                 headers:{
                     'Authorization':`Bearer ${localStorage.getItem('token')}`
                 }
             });
             const data = await response.json();
+            setIsloading(false)
             data && navigate('/notes')
             console.log(data);
         } catch (error) {
+            setIsloading(false)
             console.log(error)
         }
     }
     const handleUpdate = async(id)=>{
         try {
-            const response = await fetch(`http://localhost:8090/notes/update/${id}`,{
+            setIsloading(true)
+            const response = await fetch(`https://notes-backend-o9fm.onrender.com/notes/update/${id}`,{
                 method:"PATCH",
                 headers:{
                     'Content-Type':'application/json',
                     'Authorization':`Bearer ${localStorage.getItem('token')}`
                 },
                 body:JSON.stringify({
-                    body:notebody
+                    body:payload
                 })
             });
             const data = await response.json();
+            setIsloading(false)
             data && fetchData()
             console.log(data);
         } catch (error) {
+            setIsloading(false)
             console.log(error)
         }
+    }
+    if(isloading){
+       return <Loading/>
     }
   return (
     <div className={styles.container}>
@@ -71,8 +89,8 @@ const Note = () => {
                     {/* <p>{category}</p>
                     <p>{authour}</p> */}
                     <div className={styles.btngroup}>
-                        <button className={styles.btn} onClick={()=>{handleDelete(id)}}>Delete Note</button>
-                        <button className={styles.btn} onClick={()=>{handleUpdate(id)}}>Update Note</button>
+                        <button className={styles.btn} onClick={()=>{handleDelete(id)}}>{isloading ? 'Deleting...':'Delete Note'}</button>
+                        <button className={styles.btn} onClick={()=>{handleUpdate(id)}}>{isloading ? 'Updating...' : 'Update Note'}</button>
                     </div>
                 </div>
             )

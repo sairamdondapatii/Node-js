@@ -9,11 +9,13 @@ const Login = () => {
         email,
         password
     }
+    const [isloading,setIsloading] = useState(false)
     const navigate = useNavigate()
     const {setAuth} = useGlobalContext()
     const handleSubmit = (e)=>{
         e.preventDefault()
-        fetch('http://localhost:8090/users/login',{
+        setIsloading(true)
+        fetch('https://notes-backend-o9fm.onrender.com/users/login',{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -26,8 +28,11 @@ const Login = () => {
             setAuth(data.token)
             setEmail('')
             setPassword('')
+            console.log(data)
+            setIsloading(false)
             data.token && navigate('/notes')
         }).catch(error =>{
+            setIsloading(false)
             console.log(error)
         })
     }
@@ -37,9 +42,9 @@ const Login = () => {
     <div className="login-container"> 
         <form onSubmit={handleSubmit} className="login-form" method='post'>
             <h1>Login</h1>
-            <input type='email' placeholder='Enter your Email' required value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input type='password' placeholder='Enter your password' required value={password} onChange={(e) => setPassword(e.target.value)} />
-            <button type='submit'>Login</button> 
+            <input autoComplete='on' type='email' placeholder='Enter your Email' required value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input autoComplete='on' type='password' placeholder='Enter your password' required value={password} onChange={(e) => setPassword(e.target.value)} />
+            <button type='submit'>{isloading ? 'Logining...' : 'Login'}</button> 
         </form> 
     </div>
   )
