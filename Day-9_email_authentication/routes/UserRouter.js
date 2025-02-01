@@ -1,7 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-
-
+const jwt = require("jsonwebtoken");
 const { UserModel } = require('../model/UserModel');
 const { BlacklistModel } = require('../model/blacklistModel');
 
@@ -36,11 +35,12 @@ userRouter.post('/login',async (req,res)=>{
     try {
 
         const {email , password} = req.body;
-        const User = UserModel.findOne({email});
+        const User = await UserModel.findOne({email});
+        console.log(User)
         if(!User){
             return res.status(400).send({ message: "No user found, please signup" });
         };
-        const isPassword = bcrypt.compare(password,User.password);
+        const isPassword =await  bcrypt.compare(password,User.password);
         if(!isPassword){
             return res.status(400).send({ message: "invalid password" });
 
@@ -65,8 +65,8 @@ userRouter.get('/logout',async (req,res)=>{
     try {
 
         const {accessToken,refreshToken} = req.cookies;
-        const blacklistAccessToken = new BlacklistModel(accessToken);
-        const blacklistRefreshToken = new BlacklistModel(refreshToken);
+        const blacklistAccessToken = new BlacklistModel({ blacklist: accessToken });
+        const blacklistRefreshToken = new BlacklistModel({ blacklist: refreshToken });
         await blacklistAccessToken.save();
         await blacklistRefreshToken.save();
         res.send({message:'logout successfully'})
@@ -91,11 +91,16 @@ userRouter.get('/refresh-token', async(req,res)=>{
 
         const newAccessToken = jwt.sign({email:isTokenValid.email, role:isTokenValid.role},'accesstoken',{expiresIn:'1m'})
 
-
+        
         res.cookie('accessToken', newAccessToken,{maxAge:1000*60})
         res.send({ message: "token generated" });
     } catch (error) {
         console.log(error);
-        res.status(500).send({ message: error.message });
+        res.status(500).send({ message: error.message,hi:'hiiii' });
     }
 })
+
+
+module.exports = {
+    userRouter
+}
