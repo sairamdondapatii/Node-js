@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBot</title>
+</head>
+<body>
+    <h2>Welcome to chatbot</h2>
+    <h3>Total Users: <b id="userCount"></b></h3>
+    <input type="text" placeholder="message...">
+    <div id="message">
+
+    </div>
+    <button onclick=sendMessage()>Send</button>
+</body>
+</html>
+<script src="https://cdn.socket.io/4.8.1/socket.io.min.js" integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+" crossorigin="anonymous"></script>
+<script>
+   const socket = io('http://localhost:8090',{transports:['websocket']});
+   socket.on('message',(msg)=>{
+    console.log(msg);
+   }) 
+   socket.on('newUser',(msg)=>{
+    const count_tag = document.getElementById('userCount');
+    count_tag.innerText = msg;
+   })
+
+   socket.on('usermsg',(msg)=>{
+    const div_tag = document.getElementById('message');
+    div_tag.append(msg)
+   });
+
+   const sendMessage = ()=>{
+    const message = document.querySelector('input').value;
+    console.log(message)
+    socket.emit('message',message);
+    
+   }
+
+</script>
