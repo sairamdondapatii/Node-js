@@ -21,6 +21,9 @@ io.on("connection", (socket) => {
     
     socket.on('message',(sai)=>{
         console.log('message',sai)
+        // only reciver can view msgs
+        // socket.broadcast.emit('usermsg',sai)
+        // reciver and sender both can view mesgs
         io.emit('usermsg',sai)
     });
 
